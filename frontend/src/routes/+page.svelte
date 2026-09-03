@@ -1,2 +1,14 @@
-<h1 class="text-3xl font-bold text-blue-600">Tailwind test</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script>
+  import { PUBLIC_API_URL } from '$env/static/public';
+  import { onMount } from 'svelte';
+
+  let status = $state('checking...');
+
+  onMount(async () => {
+    const res = await fetch(`${PUBLIC_API_URL}/api/health`);
+    const data = await res.json();
+    status = data.status;
+  });
+</script>
+
+<p>Backend says: {status}</p>
